@@ -1,3 +1,5 @@
+import zIndex from "@mui/material/styles/zIndex";
+
 export const border = {
   border: "solid",
 };
@@ -7,6 +9,7 @@ export const fullHeigtCard = {
 };
 
 export const overlay2 = {
+  zIndex: 10,
   position: "absolute",
   top: "20px",
   right: "20px",

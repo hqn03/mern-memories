@@ -14,7 +14,7 @@ function Posts({ setCurrentId, props }) {
   ) : (
     <Grid2 sx={{}} container alignItems="stretch" spacing={3}>
       {posts.map((post) => (
-        <Grid2 key={post._id} size={{ xs: 12, sm: 12, md: 6, lg: 3 }}>
+        <Grid2 key={post._id} size={{ xs: 12, sm: 12, md: 6, lg: 4 }}>
           <Post post={post} setCurrentId={setCurrentId} props={props} />
         </Grid2>
       ))}

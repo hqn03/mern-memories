@@ -1,5 +1,14 @@
 import React from "react";
-import { Card, CardActions, CardContent, CardMedia, Button, Typography, ButtonBase } from "@mui/material";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Button,
+  Typography,
+  ButtonBase,
+  Box,
+} from "@mui/material";
 import moment from "moment";
 import { cardActions, details, overlay2, title } from "./styles";
 import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
@@ -18,11 +27,15 @@ function Post({ post, setCurrentId, props }) {
   const Likes = () => {
     let likesCount = post.likes.length;
     if (likesCount > 0) {
-      return post.likes.find((id) => id === user?.result?.id || id === user?.result?._id) ? (
+      return post.likes.find(
+        (id) => id === user?.result?.id || id === user?.result?._id
+      ) ? (
         <>
           <ThumbUpAlt size="small" />
           &nbsp;
-          {likesCount >= 2 ? `You and ${likesCount - 1} others` : `${likesCount} like${likesCount > 1 ? "s" : ""}`}
+          {likesCount >= 2
+            ? `You and ${likesCount - 1} others`
+            : `${likesCount} like${likesCount > 1 ? "s" : ""}`}
         </>
       ) : (
         <>
@@ -44,6 +57,7 @@ function Post({ post, setCurrentId, props }) {
   const openPost = () => {
     navigate(`/posts/${post._id}`);
   };
+  console.log(setCurrentId);
 
   return (
     <Card
@@ -58,41 +72,47 @@ function Post({ post, setCurrentId, props }) {
       raised
       elevation={6}
     >
-      <ButtonBase sx={{ display: "block", textAlign: "initial" }} onClick={openPost}>
-        <CardMedia
-          sx={{
-            height: 0,
-            paddingTop: "56.25%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            backgroundBlendMode: "darken",
-          }}
-          image={post.selectedFile}
-          title={post.tilte}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "20px",
-            left: "20px",
-            color: "white",
-          }}
-        >
-          <Typography variant="h6">{post.name}</Typography>
-          <Typography variant="body2">{moment(post.createdAt).fromNow()}</Typography>
-        </div>
-        <div style={overlay2}>
-          {(user?.result?.id === post?.creator || user?.result?._id === post?.creator) && (
-            <Button
-              sx={{ color: "white" }}
-              size="small"
-              onClick={() => {
-                setCurrentId(post._id);
-              }}
-            >
-              <MoreHorizIcon fontSize="default" />
-            </Button>
-          )}
-        </div>
+      <CardMedia
+        sx={{
+          height: 0,
+          paddingTop: "56.25%",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          backgroundBlendMode: "darken",
+        }}
+        image={post.selectedFile}
+        title={post.tilte}
+      />
+      <Box
+        sx={{
+          position: "absolute",
+          top: "20px",
+          left: "20px",
+          color: "white",
+        }}
+      >
+        <Typography variant="h6">{post.name}</Typography>
+        <Typography variant="body2">
+          {moment(post.createdAt).fromNow()}
+        </Typography>
+      </Box>
+      <div style={overlay2}>
+        {(user?.result?.id === post?.creator ||
+          user?.result?._id === post?.creator) && (
+          <Button
+            sx={{ color: "white" }}
+            size=""
+            onClick={() => {
+              setCurrentId(post._id);
+            }}
+          >
+            <MoreHorizIcon fontSize="medium" />
+          </Button>
+        )}
+      </div>
+      <ButtonBase
+        sx={{ display: "block", textAlign: "initial" }}
+        onClick={openPost}
+      >
         <div style={details}>
           <Typography variant="body2" color="textSecondary">
             {post.tags.map((tag) => `#${tag} `)}
@@ -102,16 +122,31 @@ function Post({ post, setCurrentId, props }) {
           {post.title}
         </Typography>
         <CardContent sx={{ flex: 1 }}>
-          <Typography variant="body2" color="textSecondary" align="justify">
+          <Typography
+            sx={{
+              lineClamp: 2,
+              wordBreak: "break-all",
+            }}
+            variant="body2"
+            color="textSecondary"
+            align="justify"
+            noWrap
+          >
             {post.message}
           </Typography>
         </CardContent>
       </ButtonBase>
       <CardActions sx={cardActions}>
-        <Button size="small" color="primary" disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
+        <Button
+          size="small"
+          color="primary"
+          disabled={!user?.result}
+          onClick={() => dispatch(likePost(post._id))}
+        >
           <Likes />
         </Button>
-        {(user?.result?.id === post?.creator || user?.result?._id === post?.creator) && (
+        {(user?.result?.id === post?.creator ||
+          user?.result?._id === post?.creator) && (
           <Button
             size="small"
             color="primary"

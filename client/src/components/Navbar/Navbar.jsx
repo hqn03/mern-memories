@@ -1,12 +1,19 @@
-import { AppBar, Typography, Avatar, Toolbar, Button } from "@mui/material";
+import {
+  AppBar,
+  Typography,
+  Avatar,
+  Toolbar,
+  Button,
+  Box,
+} from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { appBar, profile, purple, userName } from "./styles";
-import memories from "../../images/memories.png";
+import blogImage from "../../images/blogger-logo-6942640_1280.webp";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { jwtDecode } from "jwt-decode";
 function Navbar({ props }) {
-  //   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  // const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const { user, setUser } = props;
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,16 +38,27 @@ function Navbar({ props }) {
 
   return (
     <AppBar sx={appBar} position="static" color="inherit">
-      <div style={{ display: "flex", padding: "10px 24px" }}>
-        <Typography component={Link} to="/" sx={{ color: "rgba(0,183,255, 1)", textDecoration: "none" }} variant="h3" align="center" color="primary">
-          Memories
+      <Box sx={{ display: "flex", padding: "10px 24px", gap: 2 }}>
+        <img src={blogImage} alt="blogger" height={60} />
+        <Typography
+          component={Link}
+          to="/"
+          sx={{ color: "rgb(255,87,34)", textDecoration: "none" }}
+          variant="h3"
+          align="center"
+          color="primary"
+        >
+          Blogger
         </Typography>
-        <img style={{ marginLeft: 15 }} src={memories} alt="memories" height={60} />
-      </div>
+      </Box>
       <Toolbar>
         {user ? (
           <div style={profile}>
-            <Avatar sx={purple} alt={user.result.name} src={user.result.imageUrl}>
+            <Avatar
+              sx={purple}
+              alt={user.result.name}
+              src={user.result.imageUrl}
+            >
               {user.result.name.charAt(0)}
             </Avatar>
             <Typography sx={userName} variant="h6">
@@ -51,7 +69,12 @@ function Navbar({ props }) {
             </Button>
           </div>
         ) : (
-          <Button component={Link} to="/auth" variant="contained" color="primary">
+          <Button
+            component={Link}
+            to="/auth"
+            variant="contained"
+            color="primary"
+          >
             Sign In
           </Button>
         )}
